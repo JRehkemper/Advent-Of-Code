@@ -27,7 +27,7 @@ void processPair(char *line, int *elf1_start, int *elf1_end, int *elf2_start, in
     *elf2_end = atoi(elf2);
 }
 
-int compareRanges(int *elf1_start, int *elf1_end, int *elf2_start, int *elf2_end) {
+int compareRangesPart1(int *elf1_start, int *elf1_end, int *elf2_start, int *elf2_end) {
     printf("elf1_start: %d \n", *elf1_start);
     printf("elf1_end: %d \n", *elf1_end);
     printf("elf2_start: %d \n", *elf2_start);
@@ -41,6 +41,18 @@ int compareRanges(int *elf1_start, int *elf1_end, int *elf2_start, int *elf2_end
         return 1;
     }
     else { 
+        return 0;
+    }
+}
+
+int compareRangesPart2(int *elf1_start, int *elf1_end, int *elf2_start, int *elf2_end) {
+    if (*elf1_start <= *elf2_start && *elf1_end >= *elf2_start) {
+        return 1;
+    }
+    else if (*elf2_start <= *elf1_start && *elf2_end >= *elf1_start) {
+        return 1;
+    }
+    else {
         return 0;
     }
 }
@@ -65,7 +77,7 @@ void readFile(int *duplicateCounter) {
         int elf1_end;
         int elf2_end;
         processPair(buffer, &elf1_start, &elf1_end, &elf2_start, &elf2_end);
-        int answer = compareRanges(&elf1_start, &elf1_end, &elf2_start, &elf2_end);
+        int answer = compareRangesPart2(&elf1_start, &elf1_end, &elf2_start, &elf2_end);
         if (answer == 1) {
             printf("true\n");
             *duplicateCounter += 1;
